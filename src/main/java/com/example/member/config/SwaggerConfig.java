@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     /**
-     * 실행 : http://localhost:8081/swagger-ui/index.html
+     * 실행 : http://localhost:8080/swagger-ui/index.html
      */
 
     @Bean

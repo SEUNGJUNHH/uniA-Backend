@@ -33,19 +33,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()//csrf기능 사용X
-                .authorizeRequests().antMatchers("/member/**").authenticated()//인증된 사용자만 넘어갈 수 있도록 구현
+                .authorizeRequests().antMatchers("/api/v1/member/**").authenticated()//인증된 사용자만 넘어갈 수 있도록 구현
                 .and()
                 .formLogin()
-                .loginPage("/member/login")
-                .loginProcessingUrl("/member/login")
+                .loginPage("/api/v1/member/login")
+                .loginProcessingUrl("/api/v1/member/login")
                 .usernameParameter("loginId")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/member/login/success")
+                .defaultSuccessUrl("/api/v1/member/login/success")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-                .logoutSuccessUrl("/member/logout/success")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/member/logout"))
+                .logoutSuccessUrl("/api/v1/member/logout/success")
                 .invalidateHttpSession(true);
         //쿠키값을 가지고 있으면 제한한 url에 접근할때 로그인창 없이 접할 수 있다.
         http.rememberMe()

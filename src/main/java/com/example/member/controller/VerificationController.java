@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/verify")
+@RequestMapping("/api/v1/verify")
 public class VerificationController {
     private final VerificationService verificationService;
 
     /**
      * 인증번호 전송
-     * [GET] /verify/{memberEmail}
+     * [GET] /api/v1/verify/{memberEmail}
      * @param memberEmail
      * @return ResponseEntity
      */
@@ -36,7 +36,7 @@ public class VerificationController {
 
     /**
      * 인증번호 확인
-     * [POST] /verify
+     * [POST] /api/v1/verify
      * @param verificationDTO
      * @return ResponseEntity<?>
      */
