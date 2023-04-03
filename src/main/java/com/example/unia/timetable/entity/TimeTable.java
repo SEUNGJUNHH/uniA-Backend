@@ -1,4 +1,4 @@
-package com.example.member.entity;
+package com.example.unia.timetable.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,7 +18,6 @@ import javax.persistence.Table;
 public class TimeTable {
     @Id @GeneratedValue
     private Long id;//number
-
     private String College;
     private String Major;
     private String CourseName;

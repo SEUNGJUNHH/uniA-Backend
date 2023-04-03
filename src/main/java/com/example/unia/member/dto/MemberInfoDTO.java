@@ -1,4 +1,4 @@
-package com.example.member.dto;
+package com.example.unia.member.dto;
 
 import lombok.Data;
 

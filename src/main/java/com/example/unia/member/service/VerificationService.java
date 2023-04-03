@@ -1,4 +1,4 @@
-package com.example.member.service;
+package com.example.unia.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;

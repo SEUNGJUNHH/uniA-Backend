@@ -1,13 +1,13 @@
-package com.example.member;
+package com.example.unia;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MemberApplication {
+public class UniaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MemberApplication.class, args);
+		SpringApplication.run(UniaApplication.class, args);
 	}
 
 }

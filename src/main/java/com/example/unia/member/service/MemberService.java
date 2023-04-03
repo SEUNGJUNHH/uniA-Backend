@@ -1,10 +1,10 @@
-package com.example.member.service;
+package com.example.unia.member.service;
 
-import com.example.member.entity.Role;
+import com.example.unia.member.entity.Role;
+import com.example.unia.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
-import com.example.member.dto.MemberDTO;
-import com.example.member.entity.MemberEntity;
-import com.example.member.repository.MemberRepository;
+import com.example.unia.member.entity.MemberEntity;
+import com.example.unia.member.repository.MemberRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

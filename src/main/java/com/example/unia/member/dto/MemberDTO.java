@@ -1,6 +1,6 @@
-package com.example.member.dto;
+package com.example.unia.member.dto;
 
-import com.example.member.entity.MemberEntity;
+import com.example.unia.member.entity.MemberEntity;
 import lombok.Data;
 
 import javax.validation.constraints.*;

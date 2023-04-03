@@ -1,7 +1,7 @@
-package com.example.member.entity;
+package com.example.unia.member.entity;
 
 
-import com.example.member.dto.MemberDTO;
+import com.example.unia.member.dto.MemberDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +19,9 @@ import javax.persistence.Table;
 @Table(name = "member_table")
 public class MemberEntity {
     @Column(nullable = false)
-    private String firstName; // 성
+    private String firstName; // 이름
     @Column(nullable = false)
-    private String lastName; // 이름
+    private String lastName; // 성
     @Id
     private Long memberId; // 학번
     @Column(nullable = false)

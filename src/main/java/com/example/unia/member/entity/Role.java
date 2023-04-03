@@ -1,4 +1,4 @@
-package com.example.member.entity;
+package com.example.unia.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

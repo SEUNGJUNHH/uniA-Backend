@@ -1,22 +1,17 @@
-package com.example.member.controller;
+package com.example.unia.member.controller;
 
-import com.example.member.dto.MemberDTO;
-import com.example.member.dto.MemberInfoDTO;
-import com.example.member.service.MemberService;
+import com.example.unia.member.dto.MemberDTO;
+import com.example.unia.member.dto.MemberInfoDTO;
+import com.example.unia.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -99,7 +94,7 @@ public class MemberController {
     @DeleteMapping("/{memberId}")
     public ResponseEntity deleteById(@PathVariable Long memberId){
         memberService.deleteById(memberId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }
 
 

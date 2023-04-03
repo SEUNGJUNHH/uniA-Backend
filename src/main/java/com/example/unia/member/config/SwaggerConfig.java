@@ -1,6 +1,4 @@
-package com.example.member.config;
-
-
+package com.example.unia.member.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +24,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(true)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.member"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.unia.member"))
                 .paths(PathSelectors.any())
                 .build();
     }

@@ -1,8 +1,8 @@
-package com.example.member.controller;
+package com.example.unia.member.controller;
 
-import com.example.member.dto.VerificationDTO;
+import com.example.unia.member.dto.VerificationDTO;
 
-import com.example.member.service.VerificationService;
+import com.example.unia.member.service.VerificationService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;

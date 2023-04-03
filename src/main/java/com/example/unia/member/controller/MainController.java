@@ -1,7 +1,7 @@
-package com.example.member.controller;
+package com.example.unia.member.controller;
 
-import com.example.member.dto.MemberDTO;
-import com.example.member.service.MemberService;
+import com.example.unia.member.dto.MemberDTO;
+import com.example.unia.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class MainController {
      * [GET] /api/v1
      * @return index.html
      */
-    @GetMapping("/")
+    @GetMapping("")
     public String index() {
         return "index";
     }
