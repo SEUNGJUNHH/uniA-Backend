@@ -25,14 +25,14 @@ public class MemberController {
     //test를 위한 컨트롤러
     @GetMapping("/logout/success")
     public ResponseEntity test1() {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("result", 0);
         return new ResponseEntity(map, HttpStatus.OK);
     }
     //test를 위한 컨트롤러
     @GetMapping("/login/success")
     public ResponseEntity test2() {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("result", 1);
         return new ResponseEntity(map, HttpStatus.OK);
     }
