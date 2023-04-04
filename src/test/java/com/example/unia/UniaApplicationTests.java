@@ -1,10 +1,10 @@
-package com.example.member;
+package com.example.unia;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MemberApplicationTests {
+class UniaApplicationTests {
 
 	@Test
 	void contextLoads() {
