@@ -31,7 +31,6 @@ public class MemberService implements UserDetailsService {
         memberDTO.setMemberPassword(passwordEncoder.encode(memberDTO.getMemberPassword()));
         MemberEntity memberEntity = MemberEntity.toMemberEntity(memberDTO);
         memberRepository.save(memberEntity);
-
     }
 
     public List<MemberDTO> findAll() {
