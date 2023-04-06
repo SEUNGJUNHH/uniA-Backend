@@ -15,16 +15,16 @@ public class AssignmentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long assignmentId; // 과제ID
 
     @Column(nullable = false)
-    private String name;
+    private String name; // 과제명
 
     @Column(nullable = false)
-    private String lectureName;
+    private String lectureName; // 강의명
 
     @Column(nullable = false)
-    private LocalDateTime deadline;
+    private LocalDateTime deadline; // 마감일자
 
     @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity memberEntity;
