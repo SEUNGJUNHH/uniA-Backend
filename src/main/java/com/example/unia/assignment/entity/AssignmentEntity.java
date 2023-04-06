@@ -1,5 +1,6 @@
 package com.example.unia.assignment.entity;
 
+import com.example.unia.assignment.dto.AssignmentDTO;
 import com.example.unia.member.entity.MemberEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,5 +29,15 @@ public class AssignmentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private MemberEntity memberEntity;
+
+    public static AssignmentEntity toAssignmentEntity(AssignmentDTO assignmentDTO){
+        AssignmentEntity assignmentEntity = new AssignmentEntity();
+        assignmentEntity.setAssignmentId(assignmentDTO.getAssignmentId());
+        assignmentEntity.setName(assignmentDTO.getName());
+        assignmentEntity.setLectureName(assignmentDTO.getLectureName());
+        assignmentEntity.setDeadline(assignmentDTO.getDeadline());
+        return assignmentEntity;
+    }
+
 
 }
