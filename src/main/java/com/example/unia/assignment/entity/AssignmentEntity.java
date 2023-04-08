@@ -28,6 +28,7 @@ public class AssignmentEntity {
     private LocalDateTime deadline; // 마감일자
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
     public static AssignmentEntity toAssignmentEntity(AssignmentDTO assignmentDTO){
@@ -38,6 +39,4 @@ public class AssignmentEntity {
         assignmentEntity.setDeadline(assignmentDTO.getDeadline());
         return assignmentEntity;
     }
-
-
 }
