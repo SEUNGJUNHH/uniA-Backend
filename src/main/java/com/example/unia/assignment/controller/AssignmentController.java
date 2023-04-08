@@ -7,6 +7,8 @@ import com.example.unia.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,8 +39,9 @@ public class AssignmentController {
      * @return
      */
     @PostMapping("")
-    public ResponseEntity createTodo(@RequestBody AssignmentDTO assignmentDTO){
-        assignmentService.createAssignment(assignmentDTO);
+    public ResponseEntity createTodo(@RequestBody AssignmentDTO assignmentDTO,@AuthenticationPrincipal User customUser){
+        String username = customUser.getUsername();
+        assignmentService.createAssignment(assignmentDTO, username);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
