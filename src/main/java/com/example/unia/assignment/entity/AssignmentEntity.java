@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class AssignmentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long assignmentId; // 과제ID
 
     @Column(nullable = false)
