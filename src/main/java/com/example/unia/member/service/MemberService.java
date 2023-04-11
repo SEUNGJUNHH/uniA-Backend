@@ -1,5 +1,8 @@
 package com.example.unia.member.service;
 
+import com.example.unia.assignment.dto.AssignmentDTO;
+import com.example.unia.assignment.entity.AssignmentEntity;
+import com.example.unia.member.config.UserCustom;
 import com.example.unia.member.entity.Role;
 import com.example.unia.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
@@ -65,17 +68,20 @@ public class MemberService implements UserDetailsService {
     }
 
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<MemberEntity> findName = memberRepository.findByMemberEmail(username);
+        if(findName == null){
+            throw new UsernameNotFoundException(username);
+        }
         MemberEntity member = findName.get();
-
         List<GrantedAuthority> authorities = new ArrayList<>();
-
         authorities.add(new SimpleGrantedAuthority(Role.USER.getValue()));
 
-        return new User(member.getMemberEmail(), member.getMemberPassword() , authorities);
+        UserCustom userCustom = new UserCustom(member.getMemberEmail(),member.getMemberPassword(), authorities, member.getMemberId());
+
+        return userCustom;
+
     }
 
 }
