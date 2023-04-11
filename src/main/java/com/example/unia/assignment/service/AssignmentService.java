@@ -23,24 +23,37 @@ public class AssignmentService {
     private final MemberRepository memberRepository;
 
 
-    public void createAssignment(AssignmentDTO assignmentDTO,String memberEmail) {
+    public void createAssignment(AssignmentDTO assignmentDTO,Long userid) {
         AssignmentEntity assignmentEntity = AssignmentEntity.toAssignmentEntity(assignmentDTO);
-        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberEmail);
-        MemberEntity member = byMemberEmail.get();
+        MemberEntity member = memberRepository.findById(userid).get();
+        assignmentEntity.setMemberEntity(member);
         assignmentRepository.save(assignmentEntity);
-        member.getAssignments().add(assignmentEntity);
-        System.out.println(member.getAssignments());
+
+    }
+    public void deleteById(Long id) {
+        assignmentRepository.deleteById(id);
     }
 
-    public AssignmentDTO getAssignment(Long assignmentId) {
-        Optional<AssignmentEntity> optionalAssignmentEntity = assignmentRepository.findById(assignmentId);
-        if (optionalAssignmentEntity.isPresent()) {
-            return AssignmentDTO.toAssignmentDTO(optionalAssignmentEntity.get());
-        } else {
-            return null;
+
+    public List<AssignmentDTO> getAssignment(Long memberId) {
+
+        MemberEntity memberEntity = memberRepository.findById(memberId).get();
+
+        List<AssignmentEntity> assignmentEntityList = assignmentRepository.findByMemberEntity(memberEntity);
+
+        List<AssignmentDTO> assignmentDTOList = new ArrayList<>();
+        for (AssignmentEntity assignmentEntity : assignmentEntityList) {
+            assignmentDTOList.add(AssignmentDTO.toAssignmentDTO(assignmentEntity));
         }
+        return assignmentDTOList;
     }
-
+    public void update(long assignmentId,AssignmentDTO assignmentDTO){
+        Optional<AssignmentEntity> byId = assignmentRepository.findById(assignmentId);
+        AssignmentEntity assignmentEntity = byId.get();
+        assignmentEntity.setName(assignmentDTO.getName());
+        assignmentEntity.setLectureName(assignmentDTO.getLectureName());
+        assignmentEntity.setDeadline(assignmentDTO.getDeadline());
+    }
     public List<AssignmentDTO> findAll() {
         List<AssignmentEntity> assignmentEntityList = assignmentRepository.findAll();
         List<AssignmentDTO> assignmentDTOList = new ArrayList<>();
