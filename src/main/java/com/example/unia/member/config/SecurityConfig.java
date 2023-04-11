@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()//csrf기능 사용X
-                .authorizeRequests().antMatchers("/api/v1/member/**").authenticated()//인증된 사용자만 넘어갈 수 있도록 구현
+                .authorizeRequests().antMatchers("/api/v1/member/**","/api/v1/todo/**").authenticated()//인증된 사용자만 넘어갈 수 있도록 구현
                 .and()
                 .formLogin()
                 .loginPage("/api/v1/member/login")
