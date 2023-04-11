@@ -16,12 +16,19 @@ public class AssignmentDTO {
 
     private LocalDateTime deadline; // 마감일자
 
+//
+//    private Long memberId;
+
+
     public static AssignmentDTO toAssignmentDTO(AssignmentEntity assignmentEntity){
         AssignmentDTO assignmentDTO = new AssignmentDTO();
         assignmentDTO.setAssignmentId(assignmentEntity.getAssignmentId());
         assignmentDTO.setName(assignmentEntity.getName());
         assignmentDTO.setLectureName(assignmentEntity.getLectureName());
         assignmentDTO.setDeadline(assignmentEntity.getDeadline());
+
+//        assignmentDTO.setMemberId(assignmentEntity.getMemberEntity().getMemberId());
+
         return assignmentDTO;
     }
 }

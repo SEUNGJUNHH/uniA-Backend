@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @Table(name = "assignment_table")
 public class AssignmentEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long assignmentId; // 과제ID
 
     @Column(nullable = false)
@@ -33,7 +33,6 @@ public class AssignmentEntity {
 
     public static AssignmentEntity toAssignmentEntity(AssignmentDTO assignmentDTO){
         AssignmentEntity assignmentEntity = new AssignmentEntity();
-        assignmentEntity.setAssignmentId(assignmentDTO.getAssignmentId());
         assignmentEntity.setName(assignmentDTO.getName());
         assignmentEntity.setLectureName(assignmentDTO.getLectureName());
         assignmentEntity.setDeadline(assignmentDTO.getDeadline());
