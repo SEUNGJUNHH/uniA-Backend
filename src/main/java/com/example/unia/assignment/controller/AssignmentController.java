@@ -1,10 +1,10 @@
 package com.example.unia.assignment.controller;
 
-
 import com.example.unia.assignment.dto.AssignmentDTO;
+import com.example.unia.assignment.entity.AssignmentEntity;
 import com.example.unia.assignment.service.AssignmentService;
 import com.example.unia.member.config.UserCustom;
-import com.example.unia.member.dto.MemberDTO;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,7 +90,7 @@ public class AssignmentController {
     @PutMapping("/{assignmentId}")
     public ResponseEntity updateById(@RequestBody AssignmentDTO assignmentDTO,@PathVariable Long assignmentId) {
         assignmentService.update(assignmentId,assignmentDTO);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("update Success");
+        return ResponseEntity.status(HttpStatus.CREATED).body("update Success");
     }
 
 

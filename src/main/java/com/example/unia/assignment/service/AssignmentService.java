@@ -8,8 +8,8 @@ import com.example.unia.member.entity.MemberEntity;
 import com.example.unia.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,6 @@ public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final MemberRepository memberRepository;
 
-
     public void createAssignment(AssignmentDTO assignmentDTO,Long userid) {
         AssignmentEntity assignmentEntity = AssignmentEntity.toAssignmentEntity(assignmentDTO);
         MemberEntity member = memberRepository.findById(userid).get();
@@ -33,7 +32,6 @@ public class AssignmentService {
     public void deleteById(Long id) {
         assignmentRepository.deleteById(id);
     }
-
 
     public List<AssignmentDTO> getAssignment(Long memberId) {
 
@@ -54,6 +52,7 @@ public class AssignmentService {
         assignmentEntity.setLectureName(assignmentDTO.getLectureName());
         assignmentEntity.setDeadline(assignmentDTO.getDeadline());
     }
+
     public List<AssignmentDTO> findAll() {
         List<AssignmentEntity> assignmentEntityList = assignmentRepository.findAll();
         List<AssignmentDTO> assignmentDTOList = new ArrayList<>();
