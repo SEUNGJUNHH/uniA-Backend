@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface AssignmentRepository extends JpaRepository<AssignmentEntity, Long> {
 
+
     List<AssignmentEntity> findByMemberEntity(MemberEntity memberEntity);
+
 }

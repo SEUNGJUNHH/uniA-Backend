@@ -15,8 +15,10 @@ public class AssignmentDTO {
     private String lectureName; // 강의명
 
     private LocalDateTime deadline; // 마감일자
+
 //
 //    private Long memberId;
+
 
     public static AssignmentDTO toAssignmentDTO(AssignmentEntity assignmentEntity){
         AssignmentDTO assignmentDTO = new AssignmentDTO();
@@ -24,7 +26,9 @@ public class AssignmentDTO {
         assignmentDTO.setName(assignmentEntity.getName());
         assignmentDTO.setLectureName(assignmentEntity.getLectureName());
         assignmentDTO.setDeadline(assignmentEntity.getDeadline());
+
 //        assignmentDTO.setMemberId(assignmentEntity.getMemberEntity().getMemberId());
+
         return assignmentDTO;
     }
 }

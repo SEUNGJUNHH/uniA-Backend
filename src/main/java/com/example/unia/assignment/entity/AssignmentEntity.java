@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "assignment_table")
 public class AssignmentEntity {
 
+
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long assignmentId; // 과제ID
 
