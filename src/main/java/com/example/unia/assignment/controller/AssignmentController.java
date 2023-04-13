@@ -19,27 +19,13 @@ public class AssignmentController {
 
     private final AssignmentService assignmentService;
 
-
-    /**
-     * <<구현해야 할 기능>>
-     * 과제 조회 list [GET] 0
-     * member별 과제조회[GET] 0
-     * 과제 등록 [POST] 0
-     * 과제 삭제 [DELETE] 0
-     * 과제 수정 [PUT] 0
-     * 과제 마감기한체크
-     * 과제 정렬(마감기한 순대로)
-     * etc
-     */
-
     /**
      * 과제 등록 - 로그인 정보도 함께 넣어서 해당 url사용하려면 로그인 페이지가서 로그인 후 해야함
      * [POST] api/v1/todo
-     * @param assignmentDTO
      * @return ResponseEntity
      */
     @PostMapping("")
-    public ResponseEntity createTodo(@RequestBody AssignmentDTO assignmentDTO,@AuthenticationPrincipal UserCustom User ){
+    public ResponseEntity<?> createTodo(@RequestBody AssignmentDTO assignmentDTO,@AuthenticationPrincipal UserCustom User ){
         Long userid = User.getUserId();
         assignmentService.createAssignment(assignmentDTO, userid);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -48,7 +34,7 @@ public class AssignmentController {
     /**
      * 회원 과제 목록 조회
      * [GET] api/v1/todo/{memberId}
-     * @param memberId
+     * @param memberId 학번
      * @return assignmentDTO
      */
     @GetMapping("/{memberId}")
@@ -70,20 +56,22 @@ public class AssignmentController {
     /**
      * DB에 저장된 과제 삭제
      * [Delete] /api/v1/todo/{assignmentId}
+     * @param assignmentId 과제 고유 번호
      * @return ResponseEntity
      */
     @DeleteMapping("/{assignmentId}")
-    public ResponseEntity deleteById(@PathVariable Long assignmentId){
+    public ResponseEntity<?> deleteById(@PathVariable Long assignmentId){
         assignmentService.deleteById(assignmentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }
     /**
      * DB에 저장된 과제 수정(입력을 전체를 받을 생각이여서 put매핑으로 생성)
      * [Put] /api/v1/todo/{assignmentId}
-     * @return ResponseEntity
+     * @param assignmentId 과제 고유 번호
+     * @return ResponseEntity body("update Success")
      */
     @PutMapping("/{assignmentId}")
-    public ResponseEntity updateById(@RequestBody AssignmentDTO assignmentDTO,@PathVariable Long assignmentId) {
+    public ResponseEntity<?> updateById(@RequestBody AssignmentDTO assignmentDTO, @PathVariable Long assignmentId) {
         assignmentService.update(assignmentId,assignmentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("update Success");
     }
@@ -91,7 +79,8 @@ public class AssignmentController {
     /**
      * 과제 마감기한 순대로 정렬
      * [GET] api/v1/todo/{memberId}/sorted
-     * @return ResponseEntity
+     * @param memberId 학번
+     * @return ResponseEntity body(assignmentDTOList)
      */
     @GetMapping("/{memberId}/sorted")
     public ResponseEntity<List<AssignmentDTO>> getTodoListSorted(@PathVariable Long memberId) {
