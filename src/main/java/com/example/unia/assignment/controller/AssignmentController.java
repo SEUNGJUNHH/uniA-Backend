@@ -1,7 +1,6 @@
 package com.example.unia.assignment.controller;
 
 import com.example.unia.assignment.dto.AssignmentDTO;
-import com.example.unia.assignment.entity.AssignmentEntity;
 import com.example.unia.assignment.service.AssignmentService;
 import com.example.unia.member.config.UserCustom;
 
@@ -9,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,7 +36,7 @@ public class AssignmentController {
      * 과제 등록 - 로그인 정보도 함께 넣어서 해당 url사용하려면 로그인 페이지가서 로그인 후 해야함
      * [POST] api/v1/todo
      * @param assignmentDTO
-     * @return
+     * @return ResponseEntity
      */
     @PostMapping("")
     public ResponseEntity createTodo(@RequestBody AssignmentDTO assignmentDTO,@AuthenticationPrincipal UserCustom User ){
@@ -47,8 +44,6 @@ public class AssignmentController {
         assignmentService.createAssignment(assignmentDTO, userid);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-
 
     /**
      * 회원 과제 목록 조회
@@ -91,6 +86,17 @@ public class AssignmentController {
     public ResponseEntity updateById(@RequestBody AssignmentDTO assignmentDTO,@PathVariable Long assignmentId) {
         assignmentService.update(assignmentId,assignmentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("update Success");
+    }
+
+    /**
+     * 과제 마감기한 순대로 정렬
+     * [GET] api/v1/todo/{memberId}/sorted
+     * @return ResponseEntity
+     */
+    @GetMapping("/{memberId}/sorted")
+    public ResponseEntity<List<AssignmentDTO>> getTodoListSorted(@PathVariable Long memberId) {
+        List<AssignmentDTO> assignmentDTOList = assignmentService.getSortedAssignment(memberId);
+        return ResponseEntity.status(HttpStatus.OK).body(assignmentDTOList);
     }
 
 
