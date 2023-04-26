@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +19,7 @@ public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional
     public void createAssignment(AssignmentDTO assignmentDTO,Long userid) {
         AssignmentEntity assignmentEntity = AssignmentEntity.toAssignmentEntity(assignmentDTO);
         MemberEntity member = memberRepository.findById(userid).get();
@@ -27,6 +27,8 @@ public class AssignmentService {
         assignmentRepository.save(assignmentEntity);
 
     }
+
+    @Transactional
     public void deleteById(Long id) {
         assignmentRepository.deleteById(id);
     }
@@ -60,6 +62,7 @@ public class AssignmentService {
 
     }
 
+    @Transactional
     public void update(Long assignmentId, AssignmentDTO assignmentDTO){
         Optional<AssignmentEntity> byId = assignmentRepository.findById(assignmentId);
         AssignmentEntity assignmentEntity = byId.get();
