@@ -1,7 +1,5 @@
 package com.example.unia.member.service;
 
-import com.example.unia.assignment.dto.AssignmentDTO;
-import com.example.unia.assignment.entity.AssignmentEntity;
 import com.example.unia.member.config.UserCustom;
 import com.example.unia.member.entity.Role;
 import com.example.unia.member.dto.MemberDTO;
@@ -10,14 +8,13 @@ import com.example.unia.member.entity.MemberEntity;
 import com.example.unia.member.repository.MemberRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -57,12 +54,13 @@ public class MemberService implements UserDetailsService {
     }
 
 
-
+    @Transactional
     public void update(MemberDTO memberDTO) {
         // update라는 메소드가 따로 없기 때문에, save 메소드 사용
         memberRepository.save(MemberEntity.toMemberEntity(memberDTO));
     }
 
+    @Transactional
     public void deleteById(Long id) {
         memberRepository.deleteById(id);
     }
