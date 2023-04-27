@@ -22,16 +22,25 @@ public class MemberController {
     private final MemberService memberService;
 
 
-    //test를 위한 컨트롤러
+    /**
+     * Logout 성공 (test)
+     * [GET] /api/v1/member/logout/success
+     * @return ResponseEntity
+     */
     @GetMapping("/logout/success")
-    public ResponseEntity test1() {
+    public ResponseEntity<?> test1() {
         Map<String, Object> map = new HashMap<>();
         map.put("result", 0);
         return new ResponseEntity(map, HttpStatus.OK);
     }
-    //test를 위한 컨트롤러
+
+    /**
+     * Login 성공 (test)
+     * [GET] /api/v1/member/login/success
+     * @return ResponseEntity
+     */
     @GetMapping("/login/success")
-    public ResponseEntity test2() {
+    public ResponseEntity<?> test2() {
         Map<String, Object> map = new HashMap<>();
         map.put("result", 1);
         return new ResponseEntity(map, HttpStatus.OK);
@@ -41,11 +50,11 @@ public class MemberController {
     /**
      * 마이페이지 조회
      * [GET] /api/v1/member/{memberId}
-     * @param memberId
-     * @return memberInfoDTO
+     * @param memberId 학번
+     * @return ResponseEntity body(memberInfoDTO)
      */
     @GetMapping("/{memberId}")
-    public ResponseEntity findByMemberId(@PathVariable Long memberId){
+    public ResponseEntity<?> findByMemberId(@PathVariable Long memberId){
         MemberDTO memberDTO = memberService.findById(memberId);
         if (memberDTO == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Member does not exist");
@@ -58,9 +67,9 @@ public class MemberController {
     /**
      * 비밀번호 변경
      * [PATCH] /api/v1/member/{memberId}
-     * @param memberId
-     * @param password
-     * @return ResponseEntity<MemberDTO>
+     * @param memberId 학번
+     * @param password 비밀번호
+     * @return ResponseEntity body(existMember)
      */
     @PatchMapping("/{memberId}")
     public ResponseEntity<MemberDTO> updatePassword(@PathVariable Long memberId, @RequestParam("newPassword") String password) {
@@ -88,11 +97,11 @@ public class MemberController {
     /**
      * 회원 탈퇴
      * [DELETE] /api/v1/member/{memberId}
-     * @param memberId
-     * @return
+     * @param memberId 학번
+     * @return ResponseEntity body("Delete Success")
      */
     @DeleteMapping("/{memberId}")
-    public ResponseEntity deleteById(@PathVariable Long memberId){
+    public ResponseEntity<?> deleteById(@PathVariable Long memberId){
         memberService.deleteById(memberId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }

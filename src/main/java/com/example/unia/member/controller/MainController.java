@@ -42,12 +42,13 @@ public class MainController {
     }
 
     /**
-     * 로그인하지 않아도 회원 삭제 가능
-     * [DELETE] /api/vi/delete/{memberId}
+     * 로그인 없이 회원 삭제 기능
+     * [DELETE] /api/v1/delete/{memberId}
      */
     @DeleteMapping("/delete/{memberId}")
-    public ResponseEntity deleteById(@PathVariable Long memberId){
+    public ResponseEntity<?> deleteById(@PathVariable Long memberId){
         memberService.deleteById(memberId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }
+
 }
