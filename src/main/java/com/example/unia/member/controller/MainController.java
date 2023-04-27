@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -37,5 +39,15 @@ public class MainController {
     public ResponseEntity<List<MemberDTO>> findAll(){
         List<MemberDTO> memberDTOList = memberService.findAll();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(memberDTOList);
+    }
+
+    /**
+     * 로그인하지 않아도 회원 삭제 가능
+     * [DELETE] /api/vi/delete/{memberId}
+     */
+    @DeleteMapping("/delete/{memberId}")
+    public ResponseEntity deleteById(@PathVariable Long memberId){
+        memberService.deleteById(memberId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }
 }
