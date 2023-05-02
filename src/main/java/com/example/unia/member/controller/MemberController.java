@@ -22,13 +22,13 @@ public class MemberController {
     private final MemberService memberService;
 
 
-    /**
-     * Logout 성공 (test)
-     * [GET] /api/v1/member/logout/success
+     /**
+     * Login 실패 (test)
+     * [GET] /api/v1/member/login/fail
      * @return ResponseEntity
      */
-    @GetMapping("/logout/success")
-    public ResponseEntity<?> test1() {
+    @GetMapping("/login/fail")
+    public ResponseEntity test1() {
         Map<String, Object> map = new HashMap<>();
         map.put("result", 0);
         return new ResponseEntity(map, HttpStatus.OK);
@@ -40,7 +40,7 @@ public class MemberController {
      * @return ResponseEntity
      */
     @GetMapping("/login/success")
-    public ResponseEntity<?> test2() {
+    public ResponseEntity test2() {
         Map<String, Object> map = new HashMap<>();
         map.put("result", 1);
         return new ResponseEntity(map, HttpStatus.OK);
