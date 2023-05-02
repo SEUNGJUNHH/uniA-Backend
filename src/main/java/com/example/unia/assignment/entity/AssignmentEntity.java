@@ -4,6 +4,7 @@ import com.example.unia.assignment.dto.AssignmentDTO;
 import com.example.unia.member.entity.MemberEntity;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
+@ToString
 @Table(name = "assignment_table")
 public class AssignmentEntity {
 

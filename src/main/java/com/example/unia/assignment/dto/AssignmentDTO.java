@@ -26,9 +26,7 @@ public class AssignmentDTO {
         assignmentDTO.setName(assignmentEntity.getName());
         assignmentDTO.setLectureName(assignmentEntity.getLectureName());
         assignmentDTO.setDeadline(assignmentEntity.getDeadline());
-
 //        assignmentDTO.setMemberId(assignmentEntity.getMemberEntity().getMemberId());
-
         return assignmentDTO;
     }
 }
