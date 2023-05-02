@@ -21,9 +21,8 @@ public class MemberController {
 
     private final MemberService memberService;
 
-
     //test를 위한 컨트롤러
-    @GetMapping("/logout/success")
+    @GetMapping("/login/fail")
     public ResponseEntity test1() {
         Map<String, Object> map = new HashMap<>();
         map.put("result", 0);

@@ -10,6 +10,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -70,5 +72,10 @@ public class SignupController {
         return ResponseEntity.status(HttpStatus.OK).body("The email is available");
     }
 
-
+    @GetMapping("/logout/success")
+    public ResponseEntity test2() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", 1);
+        return new ResponseEntity(map, HttpStatus.OK);
+    }
 }
