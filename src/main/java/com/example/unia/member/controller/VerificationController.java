@@ -25,12 +25,12 @@ public class VerificationController {
     public ResponseEntity send(@PathVariable String memberEmail){
 
         if (memberEmail == null || memberEmail.isEmpty()){ // 자바 17은 StringUtils.isBlank(memberEmail) 사용 가능
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.badRequest().build();
         }
 
         verificationService.sendVerificationCode(memberEmail);
 
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.ok().build();
 
     }
 
