@@ -17,6 +17,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+
     //di를 위한 컨스트럭터 생성
     private final MemberService memberService;
 
@@ -39,11 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("loginId")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/api/v1/member/login/success")
+                .failureUrl("/api/v1/member/login/fail")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/member/logout"))
-                .logoutSuccessUrl("/api/v1/member/logout/success")
+                .logoutUrl("/api/v1/member/logout")
+                .logoutSuccessUrl("/api/v1/logout/success")
                 .invalidateHttpSession(true);
         //쿠키값을 가지고 있으면 제한한 url에 접근할때 로그인창 없이 접할 수 있다.
         http.rememberMe()
