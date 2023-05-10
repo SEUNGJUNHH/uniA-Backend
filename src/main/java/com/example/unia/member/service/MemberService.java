@@ -1,6 +1,7 @@
 package com.example.unia.member.service;
 
 import com.example.unia.member.config.UserCustom;
+import com.example.unia.member.dto.MemberUpdateDTO;
 import com.example.unia.member.entity.Role;
 import com.example.unia.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +54,14 @@ public class MemberService implements UserDetailsService {
         }
     }
 
-
+    @Transactional
+    public MemberDTO updateinfo(MemberUpdateDTO updateDTO,Long id) {
+        // update라는 메소드가 따로 없기 때문에, save 메소드 사용
+        Optional<MemberEntity> byMemberId = memberRepository.findById(id);
+        updateDTO.toMemberDTO(byMemberId.get(),updateDTO);
+        MemberDTO memberDTO = MemberDTO.toMemberDTO(byMemberId.get());
+        return memberDTO;
+    }
     @Transactional
     public void update(MemberDTO memberDTO) {
         // update라는 메소드가 따로 없기 때문에, save 메소드 사용
