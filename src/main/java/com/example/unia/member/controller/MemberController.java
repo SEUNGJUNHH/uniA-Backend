@@ -2,6 +2,7 @@ package com.example.unia.member.controller;
 
 import com.example.unia.member.dto.MemberDTO;
 import com.example.unia.member.dto.MemberInfoDTO;
+import com.example.unia.member.dto.MemberUpdateDTO;
 import com.example.unia.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -65,6 +66,22 @@ public class MemberController {
     }
 
     /**
+     * 개인정보 변경
+     * [PATCH] /api/v1/member/update/{memberId}
+     *
+     * @param memberId
+     * @param Dto
+     * @return ResponseEntity<MemberDTO>
+     */
+    @PatchMapping("/update/{memberId}")
+    public ResponseEntity<MemberDTO> updateMemberDto(@PathVariable Long memberId, @RequestBody MemberUpdateDTO Dto) {
+        MemberDTO findMember = memberService.findById(memberId);
+        if (findMember == null||Dto==null)  return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        MemberDTO updateinfo = memberService.updateinfo(Dto, memberId);
+        return ResponseEntity.status(HttpStatus.OK).body(updateinfo);
+    }
+
+    /**
      * 비밀번호 변경
      * [PATCH] /api/v1/member/{memberId}
      * @param memberId 학번
@@ -92,6 +109,7 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(existMember);
 
     }
+
 
 
     /**
