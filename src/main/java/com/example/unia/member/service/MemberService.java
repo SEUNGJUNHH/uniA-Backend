@@ -47,11 +47,12 @@ public class MemberService implements UserDetailsService {
     }
     public MemberDTO findById(Long id) {
         Optional<MemberEntity> optionalMemberEntity = memberRepository.findById(id);
-        if (optionalMemberEntity.isPresent()) {
-            return MemberDTO.toMemberDTO(optionalMemberEntity.get());
-        } else {
-            return null;
-        }
+        return optionalMemberEntity.map(MemberDTO::toMemberDTO).orElse(null);
+    }
+
+    public MemberDTO findByMemberEmail(String memberEmail){
+        Optional<MemberEntity> memberEntity = memberRepository.findByMemberEmail(memberEmail);
+        return memberEntity.map(MemberDTO::toMemberDTO).orElse(null);
     }
 
     @Transactional
