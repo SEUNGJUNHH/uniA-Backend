@@ -9,18 +9,11 @@ on:
     branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: unia-github-actions-s3-bucket
   CODE_DEPLOY_APPLICATION_NAME: my-codedeploy-app
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: my-codedeploy-deployment-group
-
-permissions:
-  contents: read
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
