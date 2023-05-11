@@ -32,8 +32,8 @@ jobs:
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
-          mysql database: 'webdb' 
-          mysql user: 'admin'
+          mysql database: 'uniADB' 
+          mysql user: 'jisin'
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
       - name: Permission for gradlew
