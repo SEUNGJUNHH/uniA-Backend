@@ -21,17 +21,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       
       - name: Set up JDK 11
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: 11
           
       - name: Setup MySQL
         uses: samin/mysql-action@v1
         with:
-          character set server: 'utf8' 
           mysql database: 'webdb' 
           mysql user: 'admin'
           mysql password: ${{ secrets.MYSQL_PASSWORD }}
