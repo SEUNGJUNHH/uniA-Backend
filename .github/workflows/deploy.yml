@@ -27,6 +27,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          
+      - name: Setup MySQL
+        uses: actions/mysql-action@v1
+        with:
+          character set server: 'utf8' 
+          mysql database: 'webdb' 
+          mysql user: 'admin'
+          mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
       - name: Permission for gradlew
         run: chmod +x ./gradlew
