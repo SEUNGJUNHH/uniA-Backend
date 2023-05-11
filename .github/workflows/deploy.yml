@@ -29,7 +29,7 @@ jobs:
           java-version: 11
           
       - name: Setup MySQL
-        uses: actions/mysql-action@v1
+        uses: samin/mysql-action@v1
         with:
           character set server: 'utf8' 
           mysql database: 'webdb' 
