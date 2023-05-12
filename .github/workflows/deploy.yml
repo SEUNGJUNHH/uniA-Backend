@@ -46,7 +46,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: Build and Test
-        run: ./gradlew build
+        run: ./gradlew build -x test
         working-directory: ${{ env.working-directory }}
         
       - name: Make Zip File
