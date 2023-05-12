@@ -7,17 +7,12 @@ files:
     overwrite: yes
 
 permissions:
-  - object: /
-    pattern: "**"
+  - object: /home/ec2-user/uniA
     owner: ec2-user
     group: ec2-user
 
 hooks:
   AfterInstall:
-    - location: scripts/stop.sh
-      timeout: 60
-      runas: ec2-user
-  ApplicationStart:
-    - location: scripts/start.sh
+    - location: scripts/deploy.sh
       timeout: 60
       runas: ec2-user
