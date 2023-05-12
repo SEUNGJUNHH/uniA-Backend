@@ -4,6 +4,8 @@ os: linux
 files:
   - source:  /
     destination: /home/ec2-user/uniA
+    overwrite: yes
+
 permissions:
   - object: /home/ec2-user/uniA
     owner: ec2-user
@@ -11,6 +13,10 @@ permissions:
 
 hooks:
   AfterInstall:
-    - location: scripts/deploy.sh
+    - location: scripts/stop.sh
+      timeout: 60
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/start.sh
       timeout: 60
       runas: ec2-user
