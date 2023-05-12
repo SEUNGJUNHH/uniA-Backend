@@ -43,11 +43,11 @@ jobs:
 
       - name: Permission for gradlew
         run: chmod +x ./gradlew
-        working-directory: ${{ env.working-directory }}
+        shell: bash
 
       - name: Build and Test
         run: ./gradlew build -x test
-        working-directory: ${{ env.working-directory }}
+        shell: bash
         
       - name: Make Zip File
         run: zip -qq -r ./$GITHUB_SHA.zip .
