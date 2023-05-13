@@ -9,7 +9,6 @@ JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
 
 CURRENT_PID=$(pgrep -f $APP_NAME)
 
-chmod 755 nohup.out
 
 if [ -z $CURRENT_PID ]
 then
