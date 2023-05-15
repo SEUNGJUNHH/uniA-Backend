@@ -43,18 +43,6 @@ public class MainController {
 
 
     /**
-     * 로그인 이전 비밀번호 재설정
-     * [GET] /api/v1/reset/{memberEmail}
-     * @param memberEmail 회원이메일
-     * @return memberDTO.getMemberId()
-     */
-    @GetMapping("/reset/{memberEmail}")
-    public ResponseEntity<?> resetPassword(@PathVariable String memberEmail){
-        MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(memberDTO.getMemberId());
-    }
-
-    /**
      * 로그인 없이 회원 삭제 기능
      * [DELETE] /api/v1/delete/{memberId}
      */

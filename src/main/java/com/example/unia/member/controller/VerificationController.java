@@ -37,15 +37,21 @@ public class VerificationController {
     /**
      * 인증번호 확인
      * [POST] /api/v1/verify
-     * @param verificationDTO
+     * @param verificationDTO 인증번호 정보(email, verificationCode)
      * @return ResponseEntity<?>
      */
     @PostMapping("")
-    public ResponseEntity<?> verify(@RequestBody VerificationDTO verificationDTO){
+    public ResponseEntity<?> verify(@RequestBody VerificationDTO verificationDTO) {
         String email = verificationDTO.getEmail();
         String verificationCode = verificationDTO.getVerificationCode();
+
+        boolean valid = verificationService.validateVerificationCode(email, verificationCode);
+        if (!valid) {
+            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).build();
+        }
+
         boolean verified = verificationService.verify(email, verificationCode);
-        if (verified){
+        if (verified) {
             return ResponseEntity.status(HttpStatus.OK).build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
