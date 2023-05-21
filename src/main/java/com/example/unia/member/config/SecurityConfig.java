@@ -17,6 +17,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+
     //di를 위한 컨스트럭터 생성
     private final MemberService memberService;
 
@@ -31,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()//csrf기능 사용X
-                .authorizeRequests().antMatchers("/api/v1/member/**").authenticated()//인증된 사용자만 넘어갈 수 있도록 구현
+                .authorizeRequests().antMatchers("/api/v1/member/**","/api/v1/todo/**").authenticated()//인증된 사용자만 넘어갈 수 있도록 구현
                 .and()
                 .formLogin()
                 .loginPage("/api/v1/member/login")
@@ -39,11 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("loginId")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/api/v1/member/login/success")
+                .failureUrl("/api/v1/member/login/fail")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/api/v1/member/logout"))
-                .logoutSuccessUrl("/api/v1/member/logout/success")
+                .logoutUrl("/api/v1/member/logout")
+                .logoutSuccessUrl("/api/v1/logout/success")
                 .invalidateHttpSession(true);
         //쿠키값을 가지고 있으면 제한한 url에 접근할때 로그인창 없이 접할 수 있다.
         http.rememberMe()

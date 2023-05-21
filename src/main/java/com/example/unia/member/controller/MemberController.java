@@ -2,6 +2,7 @@ package com.example.unia.member.controller;
 
 import com.example.unia.member.dto.MemberDTO;
 import com.example.unia.member.dto.MemberInfoDTO;
+import com.example.unia.member.dto.MemberUpdateDTO;
 import com.example.unia.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,14 +23,23 @@ public class MemberController {
     private final MemberService memberService;
 
 
-    //test를 위한 컨트롤러
-    @GetMapping("/logout/success")
+     /**
+     * Login 실패 (test)
+     * [GET] /api/v1/member/login/fail
+     * @return ResponseEntity
+     */
+    @GetMapping("/login/fail")
     public ResponseEntity test1() {
         Map<String, Object> map = new HashMap<>();
         map.put("result", 0);
         return new ResponseEntity(map, HttpStatus.OK);
     }
-    //test를 위한 컨트롤러
+
+    /**
+     * Login 성공 (test)
+     * [GET] /api/v1/member/login/success
+     * @return ResponseEntity
+     */
     @GetMapping("/login/success")
     public ResponseEntity test2() {
         Map<String, Object> map = new HashMap<>();
@@ -41,11 +51,11 @@ public class MemberController {
     /**
      * 마이페이지 조회
      * [GET] /api/v1/member/{memberId}
-     * @param memberId
-     * @return memberInfoDTO
+     * @param memberId 학번
+     * @return ResponseEntity body(memberInfoDTO)
      */
     @GetMapping("/{memberId}")
-    public ResponseEntity findByMemberId(@PathVariable Long memberId){
+    public ResponseEntity<?> findByMemberId(@PathVariable Long memberId){
         MemberDTO memberDTO = memberService.findById(memberId);
         if (memberDTO == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Member does not exist");
@@ -56,11 +66,27 @@ public class MemberController {
     }
 
     /**
+     * 개인정보 변경
+     * [PATCH] /api/v1/member/update/{memberId}
+     *
+     * @param memberId
+     * @param Dto
+     * @return ResponseEntity<MemberDTO>
+     */
+    @PatchMapping("/update/{memberId}")
+    public ResponseEntity<MemberDTO> updateMemberDto(@PathVariable Long memberId, @RequestBody MemberUpdateDTO Dto) {
+        MemberDTO findMember = memberService.findById(memberId);
+        if (findMember == null||Dto==null)  return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        MemberDTO updateinfo = memberService.updateinfo(Dto, memberId);
+        return ResponseEntity.status(HttpStatus.OK).body(updateinfo);
+    }
+
+    /**
      * 비밀번호 변경
      * [PATCH] /api/v1/member/{memberId}
-     * @param memberId
-     * @param password
-     * @return ResponseEntity<MemberDTO>
+     * @param memberId 학번
+     * @param password 비밀번호
+     * @return ResponseEntity body(existMember)
      */
     @PatchMapping("/{memberId}")
     public ResponseEntity<MemberDTO> updatePassword(@PathVariable Long memberId, @RequestParam("newPassword") String password) {
@@ -85,14 +111,15 @@ public class MemberController {
     }
 
 
+
     /**
      * 회원 탈퇴
      * [DELETE] /api/v1/member/{memberId}
-     * @param memberId
-     * @return
+     * @param memberId 학번
+     * @return ResponseEntity body("Delete Success")
      */
     @DeleteMapping("/{memberId}")
-    public ResponseEntity deleteById(@PathVariable Long memberId){
+    public ResponseEntity<?> deleteById(@PathVariable Long memberId){
         memberService.deleteById(memberId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }

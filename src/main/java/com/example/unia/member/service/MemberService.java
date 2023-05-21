@@ -1,5 +1,7 @@
 package com.example.unia.member.service;
 
+import com.example.unia.member.config.UserCustom;
+import com.example.unia.member.dto.MemberUpdateDTO;
 import com.example.unia.member.entity.Role;
 import com.example.unia.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
@@ -7,14 +9,13 @@ import com.example.unia.member.entity.MemberEntity;
 import com.example.unia.member.repository.MemberRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,29 +54,40 @@ public class MemberService implements UserDetailsService {
         }
     }
 
-
-
+    @Transactional
+    public MemberDTO updateinfo(MemberUpdateDTO updateDTO,Long id) {
+        // update라는 메소드가 따로 없기 때문에, save 메소드 사용
+        Optional<MemberEntity> byMemberId = memberRepository.findById(id);
+        updateDTO.toMemberDTO(byMemberId.get(),updateDTO);
+        MemberDTO memberDTO = MemberDTO.toMemberDTO(byMemberId.get());
+        return memberDTO;
+    }
+    @Transactional
     public void update(MemberDTO memberDTO) {
         // update라는 메소드가 따로 없기 때문에, save 메소드 사용
         memberRepository.save(MemberEntity.toMemberEntity(memberDTO));
     }
 
+    @Transactional
     public void deleteById(Long id) {
         memberRepository.deleteById(id);
     }
 
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<MemberEntity> findName = memberRepository.findByMemberEmail(username);
+        if(findName == null){
+            throw new UsernameNotFoundException(username);
+        }
         MemberEntity member = findName.get();
-
         List<GrantedAuthority> authorities = new ArrayList<>();
-
         authorities.add(new SimpleGrantedAuthority(Role.USER.getValue()));
 
-        return new User(member.getMemberEmail(), member.getMemberPassword() , authorities);
+        UserCustom userCustom = new UserCustom(member.getMemberEmail(),member.getMemberPassword(), authorities, member.getMemberId());
+
+        return userCustom;
+
     }
 
 }
