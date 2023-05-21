@@ -1,15 +1,11 @@
 package com.example.unia.game.Controller;
 
-import com.example.unia.board.dto.CommentDto;
-import com.example.unia.board.service.CommentService;
 import com.example.unia.game.Service.GameService;
-import com.example.unia.game.entitiy.Country;
+import com.example.unia.game.entity.Country;
 import com.example.unia.game.gamedto.CountryDTO;
-import com.example.unia.member.config.UserCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

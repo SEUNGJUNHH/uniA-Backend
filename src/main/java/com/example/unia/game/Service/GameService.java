@@ -1,19 +1,8 @@
 package com.example.unia.game.Service;
 
-
-import com.example.unia.board.dto.BoardDto;
-import com.example.unia.board.dto.CommentDto;
-import com.example.unia.board.dto.FreeBoardDto;
-import com.example.unia.board.dto.PromotionBoardDto;
-import com.example.unia.board.entitiy.FreeBoard;
-import com.example.unia.board.entitiy.PromotionBoard;
-import com.example.unia.board.repository.FreeBoardRepository;
-import com.example.unia.board.repository.PromotionBoardRepository;
 import com.example.unia.game.Repository.GameRepository;
-import com.example.unia.game.entitiy.Country;
+import com.example.unia.game.entity.Country;
 import com.example.unia.game.gamedto.CountryDTO;
-import com.example.unia.member.entity.MemberEntity;
-import com.example.unia.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
