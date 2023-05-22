@@ -40,9 +40,8 @@ public class FormController {
             String placeAddress = placeDto.getPlaceAddress();
             String directionUrl = placeDto.getDirectionUrl();
             String roadViewUrl = placeDto.getRoadViewUrl();
-            String distance = placeDto.getDistance();
             Integer hitCount = placeDto.getHitCount();
-            Place place = new Place(null, placeName, placeAddress, directionUrl, roadViewUrl, distance, hitCount);
+            Place place = new Place(null, placeName, placeAddress, directionUrl, roadViewUrl, hitCount);
             placeRepository.save(place);
         });
 

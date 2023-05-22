@@ -15,7 +15,6 @@ public class PlaceDto {
     private String placeAddress;
     private String directionUrl;
     private String roadViewUrl;
-    private String distance;
     private Integer hitCount;
 
 
@@ -25,7 +24,6 @@ public class PlaceDto {
                 .placeAddress(place.getPlaceAddress())
                 .directionUrl(place.getDirectionUrl())
                 .roadViewUrl(place.getRoadViewUrl())
-                .distance(place.getDistance())
                 .hitCount(place.getHitCount())
                 .build();
     }

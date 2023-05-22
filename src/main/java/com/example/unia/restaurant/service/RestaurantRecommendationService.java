@@ -58,7 +58,6 @@ public class RestaurantRecommendationService {
                 .placeAddress(direction.getTargetAddress())
                 .directionUrl(result)
                 .roadViewUrl(ROAD_VIEW_BASE_URL + direction.getTargetLatitude() + "," + direction.getTargetLongitude())
-                .distance(String.format("%.2f km", direction.getDistance()))
                 .build();
     }
 }

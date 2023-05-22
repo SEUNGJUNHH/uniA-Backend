@@ -22,8 +22,6 @@ public class Place {
     private String placeAddress; // 식당 주소
     private String directionUrl; // 길찾기 url
     private String roadViewUrl; // 로드뷰 url
-    private String distance; // 거리
-
     private Integer hitCount; // 좋아요 수
 
     @PrePersist
