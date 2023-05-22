@@ -1,6 +1,7 @@
 package com.example.unia.direction.controller;
 
 import com.example.unia.direction.dto.InputDto;
+import com.example.unia.direction.service.DirectionService;
 import com.example.unia.place.dto.PlaceDto;
 import com.example.unia.place.entity.Place;
 import com.example.unia.place.repository.PlaceRepository;
@@ -16,9 +17,10 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class FormController {
+public class DirectionController {
 
     private final RestaurantRecommendationService restaurantRecommendationService;
+    private final DirectionService directionService;
     private final PlaceRepository placeRepository;
 
     @GetMapping("/input")
@@ -37,13 +39,15 @@ public class FormController {
 
         placeDtos.forEach(placeDto -> {
             String placeName = placeDto.getPlaceName();
-            String placeAddress = placeDto.getPlaceAddress();
-            String directionUrl = placeDto.getDirectionUrl();
-            String roadViewUrl = placeDto.getRoadViewUrl();
-            String distance = placeDto.getDistance();
-            Integer hitCount = placeDto.getHitCount();
-            Place place = new Place(null, placeName, placeAddress, directionUrl, roadViewUrl, distance, hitCount);
-            placeRepository.save(place);
+            if(!directionService.isPlaceNameExists(placeName)) {
+                String placeAddress = placeDto.getPlaceAddress();
+                String directionUrl = placeDto.getDirectionUrl();
+                String roadViewUrl = placeDto.getRoadViewUrl();
+                String distance = placeDto.getDistance();
+                Integer hitCount = placeDto.getHitCount();
+                Place place = new Place(null, placeName, placeAddress, directionUrl, roadViewUrl, distance, hitCount);
+                placeRepository.save(place);
+            }
         });
 
 

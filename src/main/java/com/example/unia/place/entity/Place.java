@@ -16,7 +16,9 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String placeName; // 식당 이름
+    @Column(nullable = false)
     private String placeAddress; // 식당 주소
     private String directionUrl; // 길찾기 url
     private String roadViewUrl; // 로드뷰 url
