@@ -21,7 +21,7 @@ public class GameController {
      * @return Response.body(country)
      */
     @PostMapping("")
-    public ResponseEntity<Country> create( @RequestBody Country country){
+    public ResponseEntity<Country> create(@RequestBody Country country){
         gameService.create(country);
         return ResponseEntity.status(HttpStatus.CREATED).body(country);
     }
@@ -44,8 +44,31 @@ public class GameController {
      * @return Response.body(countryDTOS)
      */
     @GetMapping("/list")
-    public ResponseEntity<List<CountryDTO>> findAllCountry(){
+    public ResponseEntity<List<CountryDTO>> findAllDto(){
         List<CountryDTO> countryDTOS = gameService.findAll();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(countryDTOS);
+    }
+    /**
+     * 국가 List 확인 기능(id로 오름차순) - 유지관리용
+     * [GET] api/v1/game/list/test
+     * @return Response.body(countrys)
+     */
+    @GetMapping("/test/list")
+    public ResponseEntity<List<Country>> findAllCountry(){
+        List<Country> countrys = gameService.findCountry();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(countrys);
+    }
+
+
+    /**
+     * 국가 삭제
+     * [DELETE] api/v1/game/test/{id}
+     * @param id
+     * @return ResponseEntity body("Delete Success")
+     */
+    @DeleteMapping("/test/{id}")
+    public ResponseEntity<String > deleteCountry(@PathVariable Long id){
+        gameService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }
 }

@@ -37,4 +37,11 @@ public class GameService {
         }
         return countryDTOS;
     }
+    public List<Country> findCountry(){
+        List<Country> all = gameRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        return all;
+    }
+    public void deleteById(Long id){
+      gameRepository.deleteById(id);
+    }
 }
