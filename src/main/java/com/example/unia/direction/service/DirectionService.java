@@ -4,6 +4,8 @@ import com.example.unia.api.dto.DocumentDto;
 import com.example.unia.api.service.KakaoCategorySearchService;
 import com.example.unia.direction.entity.Direction;
 import com.example.unia.direction.repository.DirectionRepository;
+import com.example.unia.place.entity.Place;
+import com.example.unia.place.repository.PlaceRepository;
 import com.example.unia.restaurant.service.RestaurantSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,6 +29,7 @@ public class DirectionService {
     private final RestaurantSearchService restaurantSearchService;
     private final DirectionRepository directionRepository;
     private final KakaoCategorySearchService kakaoCategorySearchService;
+    private final PlaceRepository placeRepository;
 
     @Transactional
     public List<Direction> saveAll(List<Direction> directionList) {
@@ -85,6 +85,12 @@ public class DirectionService {
                 .limit(MAX_SEARCH_COUNT)
                 .collect(Collectors.toList());
     }
+
+    public boolean isPlaceNameExists(String placeName) {
+        Optional<Place> existingPlace = placeRepository.findByPlaceName(placeName);
+        return existingPlace.isPresent();
+    }
+
     private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         lat1 = Math.toRadians(lat1);
         lon1 = Math.toRadians(lon1);
