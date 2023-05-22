@@ -41,8 +41,8 @@ public class PlaceService {
         return place.map(PlaceDto::toPlaceDto).orElse(null);
     }
 
-    public void increaseLikeCount(Long id) {
-        Optional<Place> placeOptional = placeRepository.findById(id);
+    public void increaseLikeCount(String placeName) {
+        Optional<Place> placeOptional = placeRepository.findByPlaceName(placeName);
         placeOptional.ifPresent(place ->  {
             place.setHitCount(place.getHitCount() + 1);
             placeRepository.save(place);

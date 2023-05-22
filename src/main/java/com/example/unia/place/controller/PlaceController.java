@@ -34,17 +34,17 @@ public class PlaceController {
 
     /**
      * 식당 좋아요 수 증가
-     * [PATCH] /api/v1/restaurant/{id}
-     * @param id 식당 ID
+     * [PATCH] /api/v1/restaurant/{placeName}
+     * @param placeName 식당 placeName
      * @return ResponseEntity<String>
      */
-    @PatchMapping("/{id}")
-    public ResponseEntity<String> increaseLikeCount(@PathVariable Long id){
-        PlaceDto placeDto = placeService.findByPlaceId(id);
+    @PatchMapping("/{placeName}")
+    public ResponseEntity<String> increaseLikeCount(@PathVariable String placeName){
+        PlaceDto placeDto = placeService.findByPlaceName(placeName);
         if (placeDto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Place not found");
         }
-        placeService.increaseLikeCount(id);
+        placeService.increaseLikeCount(placeName);
         return ResponseEntity.status(HttpStatus.OK).body("Like increase");
     }
 
