@@ -1,10 +1,7 @@
 package com.example.unia.direction.entity;
 
 import com.example.unia.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +13,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Builder
 @Getter
+@ToString
 public class Direction extends BaseTimeEntity {
 
     @Id

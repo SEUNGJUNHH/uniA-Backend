@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class DirectionService {
 
     private static final int MAX_SEARCH_COUNT = 100;
-    private static final double RADIUS_KM = 7.0;
+    private static final double RADIUS_KM = 10.0;
     private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
 
     private final RestaurantSearchService restaurantSearchService;
@@ -32,8 +32,8 @@ public class DirectionService {
     private final KakaoCategorySearchService kakaoCategorySearchService;
 
     @Transactional
-    public List<Direction> saveAll(List<Direction> directionList){
-        if(CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
+    public List<Direction> saveAll(List<Direction> directionList) {
+        if (CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
         return directionRepository.saveAll(directionList);
     }
 
@@ -52,7 +52,7 @@ public class DirectionService {
                                 .targetLatitude(restaurantDto.getLatitude())
                                 .targetLongitude(restaurantDto.getLongitude())
                                 .distance(
-                                        calculateDistance(documentDto.getLatitude(), documentDto.getLongitude(),
+                                        calculateDistance(37.282669, 127.041801,
                                                 restaurantDto.getLatitude(), restaurantDto.getLongitude())
                                 )
                                 .build())
@@ -62,7 +62,6 @@ public class DirectionService {
                 .collect(Collectors.toList());
 
     }
-
     public List<Direction> buildDirectionListByCategoryApi(DocumentDto inputDocumentDto){
         if(Objects.isNull(inputDocumentDto)) return Collections.emptyList();
 
@@ -71,14 +70,17 @@ public class DirectionService {
                 .getDocumentDtoList()
                 .stream().map(resultDocumentDto ->
                         Direction.builder()
-                                .inputAddress(inputDocumentDto.getAddressName())
-                                .inputLatitude(inputDocumentDto.getLatitude())
-                                .inputLongitude(inputDocumentDto.getLongitude())
-                                .targetRestaurantName(resultDocumentDto.getPlaceName())
-                                .targetAddress(resultDocumentDto.getAddressName())
-                                .targetLatitude(resultDocumentDto.getLatitude())
-                                .targetLongitude(resultDocumentDto.getLongitude())
-                                .distance(resultDocumentDto.getDistance() * 0.001)
+                                        .inputAddress(inputDocumentDto.getAddressName())
+                                        .inputLatitude(inputDocumentDto.getLatitude())
+                                        .inputLongitude(inputDocumentDto.getLongitude())
+                                        .targetRestaurantName(resultDocumentDto.getPlaceName())
+                                        .targetAddress(resultDocumentDto.getAddressName())
+                                        .targetLatitude(resultDocumentDto.getLatitude())
+                                        .targetLongitude(resultDocumentDto.getLongitude())
+                                        .distance(
+                                                calculateDistance(37.282669, 127.041801,
+                                                        resultDocumentDto.getLatitude(), resultDocumentDto.getLongitude())
+                                        )
                                 .build())
                 .limit(MAX_SEARCH_COUNT)
                 .collect(Collectors.toList());
