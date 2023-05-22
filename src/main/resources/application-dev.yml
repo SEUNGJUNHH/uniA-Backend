@@ -38,3 +38,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+kakao:
+  rest:
+    api:
+      key: ${KAKAO_REST_API_KEY}
