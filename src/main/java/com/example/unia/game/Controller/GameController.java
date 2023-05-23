@@ -3,9 +3,11 @@ package com.example.unia.game.Controller;
 import com.example.unia.game.Service.GameService;
 import com.example.unia.game.entity.Country;
 import com.example.unia.game.gamedto.CountryDTO;
+import com.example.unia.member.config.UserCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +35,8 @@ public class GameController {
      * @return Response.body(CountryDTO)
      */
     @PostMapping("/{id}")
-    public ResponseEntity<CountryDTO> createCount(@PathVariable Long id){
-        CountryDTO click = gameService.click(id);
+    public ResponseEntity<CountryDTO> createCount(@PathVariable Long id,@AuthenticationPrincipal UserCustom User){
+        CountryDTO click = gameService.click(id,User);
         return ResponseEntity.status(HttpStatus.CREATED).body(click);
     }
 
