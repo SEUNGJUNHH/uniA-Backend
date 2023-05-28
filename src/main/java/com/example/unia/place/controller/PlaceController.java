@@ -40,12 +40,15 @@ public class PlaceController {
      * @return ResponseEntity<String>
      */
     @PatchMapping("/{placeName}/{memberId}")
-    public ResponseEntity<String> increaseLikeCount(@PathVariable String placeName, @PathVariable Long memberId) throws Exception {
+    public ResponseEntity<String> increaseLikeCount(@PathVariable String placeName, @PathVariable Long memberId) {
         PlaceDto placeDto = placeService.findByPlaceName(placeName);
         if (placeDto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Place not found");
         }
-        placeService.increaseLikeCount(placeName, memberId);
+        boolean increaseLikeCount = placeService.increaseLikeCount(placeName, memberId);
+        if(!increaseLikeCount){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This member has already liked it");
+        }
         return ResponseEntity.status(HttpStatus.OK).body("Like increase");
     }
 
@@ -57,12 +60,15 @@ public class PlaceController {
      * @return ResponseEntity<String>
      */
     @PatchMapping("/{placeName}/unlike/{memberId}")
-    public ResponseEntity<String> decreaseLikeCount(@PathVariable String placeName, @PathVariable Long memberId) throws Exception {
+    public ResponseEntity<String> decreaseLikeCount(@PathVariable String placeName, @PathVariable Long memberId) {
         PlaceDto placeDto = placeService.findByPlaceName(placeName);
         if (placeDto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Place not found");
         }
-        placeService.decreaseLikeCount(placeName, memberId);
+        boolean decreaseLikeCount = placeService.decreaseLikeCount(placeName, memberId);
+        if (!decreaseLikeCount) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This member has not liked this place before");
+        }
         return ResponseEntity.status(HttpStatus.OK).body("Like decrease");
     }
 

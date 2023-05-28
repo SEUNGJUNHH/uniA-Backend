@@ -42,7 +42,7 @@ public class PlaceService {
         return place.map(PlaceDto::toPlaceDto).orElse(null);
     }
 
-    public void increaseLikeCount(String placeName, Long memberId) throws Exception {
+    public boolean increaseLikeCount(String placeName, Long memberId) {
         Place place = placeRepository.findByPlaceName(placeName).get();
         MemberLikesEntity memberLikesEntity = memberLikesRepository.findByMemberIdAndPlaceId(memberId, place.getId());
         if (memberLikesEntity == null){
@@ -52,17 +52,21 @@ public class PlaceService {
             memberLikesEntity1.setMemberId(memberId);
             memberLikesEntity1.setPlaceId(place.getId());
             memberLikesRepository.save(memberLikesEntity1);
+            return true;
         }
+        return false;
     }
 
-    public void decreaseLikeCount(String placeName, Long memberId) throws Exception {
+    public boolean decreaseLikeCount(String placeName, Long memberId) {
         Place place = placeRepository.findByPlaceName(placeName).get();
         MemberLikesEntity memberLikesEntity = memberLikesRepository.findByMemberIdAndPlaceId(memberId, place.getId());
         if (memberLikesEntity != null) {
             place.setHitCount(place.getHitCount() - 1);
             placeRepository.save(place);
             memberLikesRepository.delete(memberLikesEntity);
+            return true;
         }
+        return false;
     }
 
     public List<PlaceDto> findAllSortedByLikeCount() {
