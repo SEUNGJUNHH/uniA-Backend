@@ -32,9 +32,9 @@ public class GuideController {
      * [Get] api/v1/guide/context
      * @return Response.body(dtos)
      */
-    @GetMapping("/content")
-    public ResponseEntity<List<GuideContentDto>> contextAll(){
-        List<GuideContentDto> dtos = guideService.findContextAll();
+    @GetMapping("/content/{id}")
+    public ResponseEntity<List<GuideContentDto>> contextAll(@PathVariable Long id){
+        List<GuideContentDto> dtos = guideService.findContextAll(id);
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
@@ -43,9 +43,9 @@ public class GuideController {
      * [Get] api/v1/guide/title
      * @return Response.body(dtos)
      */
-    @GetMapping("/title")
-    public ResponseEntity<List<GuideTitleDto>> titleAll(){
-        List<GuideTitleDto> dtos = guideService.findTitleAll();
+    @GetMapping("/title/{id}")
+    public ResponseEntity<List<GuideTitleDto>> titleAll(@PathVariable Long id){
+        List<GuideTitleDto> dtos = guideService.findTitleAll(id);
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 

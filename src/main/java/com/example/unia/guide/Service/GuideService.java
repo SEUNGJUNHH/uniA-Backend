@@ -22,19 +22,19 @@ public class GuideService {
         guideRepository.save(guide);
     }
 
-    public List<GuideTitleDto> findTitleAll(){
+    public List<GuideTitleDto> findTitleAll(Long id){
         List<Guide> guides = guideRepository.findAll();
         List<GuideTitleDto> dtos = new ArrayList<>();
         for (Guide guide : guides) {
-            dtos.add(new GuideTitleDto(guide));
+            if(id==guide.id) dtos.add(new GuideTitleDto(guide));
         }
         return dtos;
     }
-    public List<GuideContentDto> findContextAll(){
+    public List<GuideContentDto> findContextAll(Long id){
         List<Guide> guides = guideRepository.findAll();
         List<GuideContentDto> dtos = new ArrayList<>();
         for (Guide guide : guides) {
-            dtos.add(new GuideContentDto(guide));
+            if(id==guide.id) dtos.add(new GuideContentDto(guide));
         }
         return dtos;
     }
