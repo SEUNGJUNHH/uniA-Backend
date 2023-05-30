@@ -22,4 +22,6 @@ public class MemberLikesEntity {
 
     @Column(name = "place_id", nullable = false)
     private Long placeId;
+
+
 }
