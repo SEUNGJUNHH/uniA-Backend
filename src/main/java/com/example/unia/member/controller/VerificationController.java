@@ -25,31 +25,38 @@ public class VerificationController {
     public ResponseEntity send(@PathVariable String memberEmail){
 
         if (memberEmail == null || memberEmail.isEmpty()){ // 자바 17은 StringUtils.isBlank(memberEmail) 사용 가능
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.badRequest().build();
         }
 
         verificationService.sendVerificationCode(memberEmail);
 
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.ok().build();
 
     }
 
     /**
      * 인증번호 확인
      * [POST] /api/v1/verify
-     * @param verificationDTO
+     * @param verificationDTO 인증번호 정보(email, verificationCode)
      * @return ResponseEntity<?>
      */
     @PostMapping("")
-    public ResponseEntity<?> verify(@RequestBody VerificationDTO verificationDTO){
+    public ResponseEntity<?> verify(@RequestBody VerificationDTO verificationDTO) {
         String email = verificationDTO.getEmail();
         String verificationCode = verificationDTO.getVerificationCode();
+
+        boolean valid = verificationService.validateVerificationCode(email, verificationCode);
+        if (!valid) {
+            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).build();
+        }
+
         boolean verified = verificationService.verify(email, verificationCode);
-        if (verified){
+        if (verified) {
             return ResponseEntity.status(HttpStatus.OK).build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
 
 }

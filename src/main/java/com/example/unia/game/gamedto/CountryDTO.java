@@ -1,6 +1,6 @@
 package com.example.unia.game.gamedto;
 
-import com.example.unia.game.entitiy.Country;
+import com.example.unia.game.entity.Country;
 import lombok.Data;
 
 @Data

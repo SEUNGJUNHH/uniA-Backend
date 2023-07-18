@@ -1,9 +1,7 @@
 package com.example.unia.game.Controller;
 
-import com.example.unia.board.dto.CommentDto;
-import com.example.unia.board.service.CommentService;
 import com.example.unia.game.Service.GameService;
-import com.example.unia.game.entitiy.Country;
+import com.example.unia.game.entity.Country;
 import com.example.unia.game.gamedto.CountryDTO;
 import com.example.unia.member.config.UserCustom;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +23,7 @@ public class GameController {
      * @return Response.body(country)
      */
     @PostMapping("")
-    public ResponseEntity<Country> create( @RequestBody Country country){
+    public ResponseEntity<Country> create(@RequestBody Country country){
         gameService.create(country);
         return ResponseEntity.status(HttpStatus.CREATED).body(country);
     }
@@ -37,8 +35,8 @@ public class GameController {
      * @return Response.body(CountryDTO)
      */
     @PostMapping("/{id}")
-    public ResponseEntity<CountryDTO> createCount(@PathVariable Long id){
-        CountryDTO click = gameService.click(id);
+    public ResponseEntity<CountryDTO> createCount(@PathVariable Long id,@AuthenticationPrincipal UserCustom User){
+        CountryDTO click = gameService.click(id,User);
         return ResponseEntity.status(HttpStatus.CREATED).body(click);
     }
 
@@ -48,8 +46,31 @@ public class GameController {
      * @return Response.body(countryDTOS)
      */
     @GetMapping("/list")
-    public ResponseEntity<List<CountryDTO>> findAllCountry(){
+    public ResponseEntity<List<CountryDTO>> findAllDto(){
         List<CountryDTO> countryDTOS = gameService.findAll();
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(countryDTOS);
+    }
+    /**
+     * 국가 List 확인 기능(id로 오름차순) - 유지관리용
+     * [GET] api/v1/game/list/test
+     * @return Response.body(countrys)
+     */
+    @GetMapping("/test/list")
+    public ResponseEntity<List<Country>> findAllCountry(){
+        List<Country> countrys = gameService.findCountry();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(countrys);
+    }
+
+
+    /**
+     * 국가 삭제
+     * [DELETE] api/v1/game/test/{id}
+     * @param id
+     * @return ResponseEntity body("Delete Success")
+     */
+    @DeleteMapping("/test/{id}")
+    public ResponseEntity<String > deleteCountry(@PathVariable Long id){
+        gameService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Delete Success");
     }
 }
