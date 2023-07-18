@@ -34,19 +34,44 @@ public class PlaceController {
 
     /**
      * 식당 좋아요 수 증가
-     * [PATCH] /api/v1/restaurant/{placeName}
-     * @param placeName 식당 placeName
+     * [PATCH] /api/v1/restaurant/{placeName}/{memberId}
+     * @param placeName 식당 이름
+     * @param memberId 회원 ID
      * @return ResponseEntity<String>
      */
-    @PatchMapping("/{placeName}")
-    public ResponseEntity<String> increaseLikeCount(@PathVariable String placeName){
+    @PatchMapping("/{placeName}/{memberId}")
+    public ResponseEntity<String> increaseLikeCount(@PathVariable String placeName, @PathVariable Long memberId) {
         PlaceDto placeDto = placeService.findByPlaceName(placeName);
         if (placeDto == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Place not found");
         }
-        placeService.increaseLikeCount(placeName);
+        boolean increaseLikeCount = placeService.increaseLikeCount(placeName, memberId);
+        if(!increaseLikeCount){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This member has already liked it");
+        }
         return ResponseEntity.status(HttpStatus.OK).body("Like increase");
     }
+
+    /**
+     * 식당 좋아요 수 감소
+     * [PATCH] /api/v1/restaurant/{placeName}/unlike/{memberId}
+     * @param placeName 식당 placeName
+     * @param memberId 회원 ID
+     * @return ResponseEntity<String>
+     */
+    @PatchMapping("/{placeName}/unlike/{memberId}")
+    public ResponseEntity<String> decreaseLikeCount(@PathVariable String placeName, @PathVariable Long memberId) {
+        PlaceDto placeDto = placeService.findByPlaceName(placeName);
+        if (placeDto == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Place not found");
+        }
+        boolean decreaseLikeCount = placeService.decreaseLikeCount(placeName, memberId);
+        if (!decreaseLikeCount) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This member has not liked this place before");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Like decrease");
+    }
+
 
     /**
      * 식당 좋아요 수 순으로 조회
@@ -71,3 +96,4 @@ public class PlaceController {
     }
 
 }
+
