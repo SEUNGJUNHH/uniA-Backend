@@ -4,8 +4,6 @@ import com.example.unia.api.dto.DocumentDto;
 import com.example.unia.api.service.KakaoCategorySearchService;
 import com.example.unia.direction.entity.Direction;
 import com.example.unia.direction.repository.DirectionRepository;
-import com.example.unia.place.entity.Place;
-import com.example.unia.place.repository.PlaceRepository;
 import com.example.unia.restaurant.service.RestaurantSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -23,17 +24,16 @@ import java.util.stream.Collectors;
 public class DirectionService {
 
     private static final int MAX_SEARCH_COUNT = 100;
-    private static final double RADIUS_KM = 10.0;
+    private static final double RADIUS_KM = 7.0;
     private static final String DIRECTION_BASE_URL = "https://map.kakao.com/link/map/";
 
     private final RestaurantSearchService restaurantSearchService;
     private final DirectionRepository directionRepository;
     private final KakaoCategorySearchService kakaoCategorySearchService;
-    private final PlaceRepository placeRepository;
 
     @Transactional
-    public List<Direction> saveAll(List<Direction> directionList) {
-        if (CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
+    public List<Direction> saveAll(List<Direction> directionList){
+        if(CollectionUtils.isEmpty(directionList)) return Collections.emptyList();
         return directionRepository.saveAll(directionList);
     }
 
@@ -52,7 +52,7 @@ public class DirectionService {
                                 .targetLatitude(restaurantDto.getLatitude())
                                 .targetLongitude(restaurantDto.getLongitude())
                                 .distance(
-                                        calculateDistance(37.282669, 127.041801,
+                                        calculateDistance(documentDto.getLatitude(), documentDto.getLongitude(),
                                                 restaurantDto.getLatitude(), restaurantDto.getLongitude())
                                 )
                                 .build())
@@ -62,6 +62,7 @@ public class DirectionService {
                 .collect(Collectors.toList());
 
     }
+
     public List<Direction> buildDirectionListByCategoryApi(DocumentDto inputDocumentDto){
         if(Objects.isNull(inputDocumentDto)) return Collections.emptyList();
 
@@ -70,27 +71,18 @@ public class DirectionService {
                 .getDocumentDtoList()
                 .stream().map(resultDocumentDto ->
                         Direction.builder()
-                                        .inputAddress(inputDocumentDto.getAddressName())
-                                        .inputLatitude(inputDocumentDto.getLatitude())
-                                        .inputLongitude(inputDocumentDto.getLongitude())
-                                        .targetRestaurantName(resultDocumentDto.getPlaceName())
-                                        .targetAddress(resultDocumentDto.getAddressName())
-                                        .targetLatitude(resultDocumentDto.getLatitude())
-                                        .targetLongitude(resultDocumentDto.getLongitude())
-                                        .distance(
-                                                calculateDistance(37.282669, 127.041801,
-                                                        resultDocumentDto.getLatitude(), resultDocumentDto.getLongitude())
-                                        )
+                                .inputAddress(inputDocumentDto.getAddressName())
+                                .inputLatitude(inputDocumentDto.getLatitude())
+                                .inputLongitude(inputDocumentDto.getLongitude())
+                                .targetRestaurantName(resultDocumentDto.getPlaceName())
+                                .targetAddress(resultDocumentDto.getAddressName())
+                                .targetLatitude(resultDocumentDto.getLatitude())
+                                .targetLongitude(resultDocumentDto.getLongitude())
+                                .distance(resultDocumentDto.getDistance() * 0.001)
                                 .build())
                 .limit(MAX_SEARCH_COUNT)
                 .collect(Collectors.toList());
     }
-
-    public boolean isPlaceNameExists(String placeName) {
-        Optional<Place> existingPlace = placeRepository.findByPlaceName(placeName);
-        return existingPlace.isPresent();
-    }
-
     private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
         lat1 = Math.toRadians(lat1);
         lon1 = Math.toRadians(lon1);

@@ -39,7 +39,6 @@ public class RestaurantRecommendationService {
         DocumentDto documentDto = kakaoApiResponseDto.getDocumentDtoList().get(0);
 
         List<Direction> directionList = directionService.buildDirectionListByCategoryApi(documentDto);
-        System.out.println(directionList);
         return directionService.saveAll(directionList)
                 .stream()
                 .map(this::convertToPlaceDto)
@@ -59,7 +58,6 @@ public class RestaurantRecommendationService {
                 .placeAddress(direction.getTargetAddress())
                 .directionUrl(result)
                 .roadViewUrl(ROAD_VIEW_BASE_URL + direction.getTargetLatitude() + "," + direction.getTargetLongitude())
-                .distance(String.format("%.2f km", direction.getDistance()))
                 .build();
     }
 }
