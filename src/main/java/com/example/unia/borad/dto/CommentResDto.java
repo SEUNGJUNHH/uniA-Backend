@@ -4,9 +4,9 @@ import lombok.Data;
 
 
 @Data
-public class CommentDto {
+public class CommentResDto {
 
+    private String nickname;
     private String content;
-    private Long boardId;
 
 }

@@ -26,6 +26,7 @@ public class BoardService {
     private final FreeBoardRepository freeBoardRepository;
     private final PromotionBoardRepository promotionBoardRepository;
     private final MemberRepository memberRepository;
+    
     public void createFreeBoard(FreeBoardDto boardDto, Long id) {
         Optional<MemberEntity> memberEntity = memberRepository.findById(id);
         FreeBoard freeBoard = FreeBoard.builder().boardDto(boardDto).member(memberEntity.get()).build();
@@ -34,6 +35,7 @@ public class BoardService {
     public void createPromotionBoard(PromotionBoardDto boardDto, Long id) {
         Optional<MemberEntity> memberEntity = memberRepository.findById(id);
         PromotionBoard promotionBoard = PromotionBoard.builder().boardDto(boardDto).member(memberEntity.get()).build();
+        System.out.println("=--------------------=======");
         promotionBoardRepository.save(promotionBoard);
     }
 

@@ -33,7 +33,7 @@ public class BoardController {
     }
     /**
      * 홍보게시판 등록
-     * [POST] api/v1/board/freeCreate
+     * [POST] api/v1/board/promotionCreate
      * @param boardDto
      * @return Response.body(boardDto)
      */
@@ -45,7 +45,7 @@ public class BoardController {
     }
 
     /**
-     * 자유게시판 리스트 (기능X, 확인용)
+     * 자유게시판 리스트 
      * [Get] api/v1/board/freeList
      * @return List<FreeBoardDto>
      */
@@ -55,7 +55,7 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(freeBoardDtos);
     }
     /**
-     * 홍보게시판 리스트 (기능X, 확인용)
+     * 홍보게시판 리스트 
      * [Get] api/v1/board/promotionList
      * @return List<promotionBoardDtos>
      */

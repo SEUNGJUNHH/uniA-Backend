@@ -6,7 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "free_comment")
@@ -16,7 +21,7 @@ import javax.persistence.*;
 public class FreeComment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "comment_id")
     private Long commentId;
 
@@ -25,6 +30,9 @@ public class FreeComment {
     private String content;
 
 
+    @CreatedDate
+    private LocalDateTime createdDate;
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "free_id")
     private FreeBoard freeBoard;
